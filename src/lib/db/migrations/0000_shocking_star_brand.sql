@@ -35,3 +35,10 @@ CREATE TABLE `verificationToken` (
 	`expires` timestamp NOT NULL,
 	CONSTRAINT `verificationToken_identifier_token` PRIMARY KEY(`identifier`,`token`)
 );
+--> statement-breakpoint
+CREATE TABLE `computers` (
+	`id` serial AUTO_INCREMENT NOT NULL,
+	`brand` varchar(256) NOT NULL,
+	`cores` int NOT NULL,
+	CONSTRAINT `computers_id` PRIMARY KEY(`id`)
+);

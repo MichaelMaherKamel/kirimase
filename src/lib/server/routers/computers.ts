@@ -1,6 +1,11 @@
-import { publicProcedure, router } from "../trpc";
+import { type } from 'os'
+import { publicProcedure, router } from '../trpc'
+import { getComputers } from '@/lib/api/computers/queries'
+
 export const computersRouter = router({
   getComputers: publicProcedure.query(async () => {
-    return [{ id: 1, name: "Macintosh" }, { id: 2, name: "Microsoft" }];
+    return getComputers()
   }),
-});
+})
+
+// export type AppRouter = typeof computersRouter
