@@ -1,14 +1,14 @@
 import { computersRouter } from './computers'
 import { router } from '../trpc'
 import { siteRouter } from './site'
+import { userRouter } from './users'
+import { todoRouter } from './todo'
 
 export const appRouter = router({
   computers: computersRouter,
   site: siteRouter,
+  users: userRouter,
+  todo: todoRouter,
 })
 
 export type AppRouter = typeof appRouter
-
-// This is how you can query the data from browser or thunderbird client
-// http://localhost:3000/api/trpc/site.getSite or
-// http://localhost:3000/api/trpc/computers.getComputers

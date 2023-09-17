@@ -1,4 +1,4 @@
-import "dotenv/config";
+import { env } from "@/lib/env.mjs";
   
 import { drizzle } from "drizzle-orm/planetscale-serverless";
 import { migrate } from "drizzle-orm/planetscale-serverless/migrator";
@@ -6,12 +6,12 @@ import { connect } from "@planetscale/database";
 
 
 const runMigrate = async () => {
-  if (!process.env.DATABASE_URL) {
+  if (!env.DATABASE_URL) {
     throw new Error("DATABASE_URL is not defined");
   }
 
   
-const connection = connect({ url: process.env.DATABASE_URL! });
+const connection = connect({ url: env.DATABASE_URL });
  
 const db = drizzle(connection);
 

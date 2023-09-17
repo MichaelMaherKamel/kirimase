@@ -9,19 +9,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import SitForm from "./SitForm";
-import { Sit } from "@/lib/db/schema/site";
+import TodForm from "./TodForm";
+import { Tod } from "@/lib/db/schema/todo";
 
-export default function SitModal({ 
-  sit,
+export default function TodModal({ 
+  tod,
   emptyState,
 }: { 
-  sit?: Sit;
+  tod?: Tod;
   emptyState?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const closeModal = () => setOpen(false);
-  const editing = !!sit?.id;
+  const editing = !!tod?.id;
   return (
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
@@ -42,7 +42,7 @@ export default function SitModal({
               <path d="M5 12h14" />
               <path d="M12 5v14" />
             </svg>
-            New Sit
+            New Tod
           </Button>
         ) : (
         <Button
@@ -54,10 +54,10 @@ export default function SitModal({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader className="px-5 pt-5">
-          <DialogTitle>{ editing ? "Edit" : "Create" } Sit</DialogTitle>
+          <DialogTitle>{ editing ? "Edit" : "Create" } Tod</DialogTitle>
         </DialogHeader>
         <div className="px-5 pb-5">
-          <SitForm closeModal={closeModal} sit={sit} />
+          <TodForm closeModal={closeModal} tod={tod} />
         </div>
       </DialogContent>
     </Dialog>

@@ -1,8 +1,8 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import TrpcProvider from '@/lib/trpc/Provider'
 import NextAuthProvider from '@/lib/auth/Provider'
+import TrpcProvider from '@/lib/trpc/Provider'
 import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -15,13 +15,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='en'>
-      <body className={inter.className}>
-        <TrpcProvider>
-          <NextAuthProvider>
+      <body className={`${inter.className} flex justify-center`}>
+        <NextAuthProvider>
+          <TrpcProvider>
             {children}
             <Toaster />
-          </NextAuthProvider>
-        </TrpcProvider>
+          </TrpcProvider>
+        </NextAuthProvider>
       </body>
     </html>
   )

@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "0cf58bec-681e-44ff-87bb-d04280a830df",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "a9c71931-e56b-4001-96b8-397eb6afda51",
+  "prevId": "8deecfd9-8443-424a-b18c-73fed8b16ff6",
   "tables": {
     "account": {
       "name": "account",
@@ -260,6 +260,36 @@
           ]
         }
       },
+      "uniqueConstraints": {}
+    },
+    "site": {
+      "name": "site",
+      "columns": {
+        "sitename": {
+          "name": "sitename",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sitedescription": {
+          "name": "sitedescription",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sitegoal": {
+          "name": "sitegoal",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     }
   },

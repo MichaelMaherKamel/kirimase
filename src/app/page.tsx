@@ -1,14 +1,19 @@
 import SignIn from '@/components/auth/SignIn'
+import { serverClient } from '@/lib/trpc/server'
+import { GiClothes } from 'react-icons/gi'
+export const dynamic = 'force-dynamic'
 
-export default function Home() {
+export default async function Home() {
+  const [site] = (await serverClient.site.getSite()).site
   return (
-    <main className='flex min-h-screen flex-col items-center justify-between p-24'>
-      <div className='flex flex-col items-center justify-center'>
+    <div>
+      <div>
         <SignIn />
       </div>
-      <div className='flex flex-col items-center justify-center'>
-        <h1 className='text-4xl font-bold text-gray-900'>Hello World!</h1>
+      <div className='flex justify-center mx-5'>
+        <GiClothes />
+        {site.sitename}
       </div>
-    </main>
+    </div>
   )
 }

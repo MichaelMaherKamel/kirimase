@@ -3,22 +3,22 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 import {
-  createSit,
-  deleteSit,
-  updateSit,
-} from "@/lib/api/site/mutations";
+  createTod,
+  deleteTod,
+  updateTod,
+} from "@/lib/api/todo/mutations";
 import { 
-  sitIdSchema,
-  insertSitParams,
-  updateSitParams 
-} from "@/lib/db/schema/site";
+  todIdSchema,
+  insertTodParams,
+  updateTodParams 
+} from "@/lib/db/schema/todo";
 
 export async function POST(req: Request) {
   try {
-    const validatedData = insertSitParams.parse(await req.json());
-    const { success, error } = await createSit(validatedData);
+    const validatedData = insertTodParams.parse(await req.json());
+    const { success, error } = await createTod(validatedData);
     if (error) return NextResponse.json({ error }, { status: 500 });
-    revalidatePath("/site"); // optional - assumes you will have named route same as entity
+    revalidatePath("/todo"); // optional - assumes you will have named route same as entity
     return NextResponse.json(success, { status: 201 });
   } catch (err) {
     if (err instanceof z.ZodError) {
@@ -35,10 +35,10 @@ export async function PUT(req: Request) {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
 
-    const validatedData = updateSitParams.parse(await req.json());
-    const validatedParams = sitIdSchema.parse({ id });
+    const validatedData = updateTodParams.parse(await req.json());
+    const validatedParams = todIdSchema.parse({ id });
 
-    const { success, error } = await updateSit(validatedParams.id, validatedData);
+    const { success, error } = await updateTod(validatedParams.id, validatedData);
 
     if (error) return NextResponse.json({ error }, { status: 500 });
     return NextResponse.json(success, { status: 200 });
@@ -56,8 +56,8 @@ export async function DELETE(req: Request) {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
 
-    const validatedParams = sitIdSchema.parse({ id });
-    const { success, error } = await deleteSit(validatedParams.id);
+    const validatedParams = todIdSchema.parse({ id });
+    const { success, error } = await deleteTod(validatedParams.id);
     if (error) return NextResponse.json({ error }, { status: 500 });
 
     return NextResponse.json(success, { status: 200 });

@@ -5,8 +5,57 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1694274924606,
-      "tag": "0000_shocking_star_brand",
+      "when": 1694872640631,
+      "tag": "0000_greedy_dragon_lord",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1694874482343,
+      "tag": "0001_slim_morbius",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1694883236016,
+      "tag": "0002_skinny_morgan_stark",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1694884655884,
+      "tag": "0003_odd_diamondback",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1694911212865,
+      "tag": "0004_daily_virginia_dare",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1694915407659,
+      "tag": "0005_tiny_shard",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1694967810466,
+      "tag": "0006_nasty_rhino",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1694981670654,
+      "tag": "0007_cool_firelord",
       "breakpoints": true
     }
   ]

@@ -1,0 +1,1 @@
+ALTER TABLE `user` MODIFY COLUMN `role` varchar(255) NOT NULL DEFAULT 'user';

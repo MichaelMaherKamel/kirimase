@@ -1,6 +1,6 @@
 "use client";
 
-import { Sit, NewSitParams, insertSitParams } from "@/lib/db/schema/site";
+import { Tod, NewTodParams, insertTodParams } from "@/lib/db/schema/todo";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -16,64 +16,66 @@ import { Input } from "@/components/ui/input";
 import { trpc } from "@/lib/trpc/client";
 import { Button } from "../ui/button";
 import { z } from "zod";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 
-const SitForm = ({
-  sit,
+const TodForm = ({
+  tod,
   closeModal,
 }: {
-  sit?: Sit;
+  tod?: Tod;
   closeModal: () => void;
 }) => {
   const { toast } = useToast();
-  
-  const editing = !!sit?.id;
+  const { data: computers } = trpc.computers.getComputers.useQuery();
+  const editing = !!tod?.id;
 
   const router = useRouter();
   const utils = trpc.useContext();
 
-  const form = useForm<z.infer<typeof insertSitParams>>({
+  const form = useForm<z.infer<typeof insertTodParams>>({
     // latest Zod release has introduced a TS error with zodResolver
     // open issue: https://github.com/colinhacks/zod/issues/2663
     // errors locally but not in production
-    resolver: zodResolver(insertSitParams),
-    defaultValues: sit ?? {
-      sitename: "",
-     sitedescription: ""
+    resolver: zodResolver(insertTodParams),
+    defaultValues: tod ?? {
+      name: "",
+     description: "",
+     computerId: 0
     },
   });
 
   const onSuccess = (action: "create" | "update" | "delete") => {
-    utils.site.getSite.invalidate();
+    utils.todo.getTodo.invalidate();
     router.refresh();
     closeModal();toast({
       title: 'Success',
-      description: `Sit ${action}d!`,
+      description: `Tod ${action}d!`,
       variant: "default",
     });
   };
 
-  const { mutate: createSit, isLoading: isCreating } =
-    trpc.site.createSit.useMutation({
+  const { mutate: createTod, isLoading: isCreating } =
+    trpc.todo.createTod.useMutation({
       onSuccess: () => onSuccess("create"),
     });
 
-  const { mutate: updateSit, isLoading: isUpdating } =
-    trpc.site.updateSit.useMutation({
+  const { mutate: updateTod, isLoading: isUpdating } =
+    trpc.todo.updateTod.useMutation({
       onSuccess: () => onSuccess("update"),
     });
 
-  const { mutate: deleteSit, isLoading: isDeleting } =
-    trpc.site.deleteSit.useMutation({
+  const { mutate: deleteTod, isLoading: isDeleting } =
+    trpc.todo.deleteTod.useMutation({
       onSuccess: () => onSuccess("delete"),
     });
 
-  const handleSubmit = (values: NewSitParams) => {
+  const handleSubmit = (values: NewTodParams) => {
     if (editing) {
-      updateSit({ ...values, id: sit.id });
+      updateTod({ ...values, id: tod.id });
     } else {
-      createSit(values);
+      createTod(values);
     }
   };
   return (
@@ -81,9 +83,9 @@ const SitForm = ({
       <form onSubmit={form.handleSubmit(handleSubmit)} className={"space-y-8"}>
         <FormField
           control={form.control}
-          name="sitename"
+          name="name"
           render={({ field }) => (<FormItem>
-              <FormLabel>Sitename</FormLabel>
+              <FormLabel>Name</FormLabel>
                 <FormControl>
             <Input {...field} />
           </FormControl>
@@ -94,12 +96,39 @@ const SitForm = ({
         />
         <FormField
           control={form.control}
-          name="sitedescription"
+          name="description"
           render={({ field }) => (<FormItem>
-              <FormLabel>Sitedescription</FormLabel>
+              <FormLabel>Description</FormLabel>
                 <FormControl>
             <Input {...field} />
           </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="computerId"
+          render={({ field }) => (<FormItem>
+              <FormLabel>Computer Id</FormLabel>
+                <FormControl>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={String(field.value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a computer" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {computers?.computers.map((computer) => (
+                      <SelectItem key={computer.id} value={computer.id.toString()}>
+                        {computer.id}  {/* TODO: Replace with a field from the computer model */}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+            </FormControl>
 
               <FormMessage />
             </FormItem>
@@ -118,7 +147,7 @@ const SitForm = ({
           <Button
             type="button"
             variant={"destructive"}
-            onClick={() => deleteSit({ id: sit.id })}
+            onClick={() => deleteTod({ id: tod.id })}
           >
             Delet{isDeleting ? "ing..." : "e"}
           </Button>
@@ -128,4 +157,4 @@ const SitForm = ({
   );
 };
 
-export default SitForm;
+export default TodForm;

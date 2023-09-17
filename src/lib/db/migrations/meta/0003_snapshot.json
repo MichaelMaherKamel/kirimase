@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "0cf58bec-681e-44ff-87bb-d04280a830df",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "796b0a77-96e5-40e0-9c16-c3ec08a491a9",
+  "prevId": "a9c71931-e56b-4001-96b8-397eb6afda51",
   "tables": {
     "account": {
       "name": "account",
@@ -255,6 +255,50 @@
       "compositePrimaryKeys": {
         "computers_id": {
           "name": "computers_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "site": {
+      "name": "site",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sitename": {
+          "name": "sitename",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sitedescription": {
+          "name": "sitedescription",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sitegoal": {
+          "name": "sitegoal",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "site_id": {
+          "name": "site_id",
           "columns": [
             "id"
           ]

@@ -1,35 +1,13 @@
-import { varchar, serial, mysqlTable } from "drizzle-orm/mysql-core";
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import { z } from "zod";
+import { varchar, mysqlTable } from 'drizzle-orm/mysql-core'
 
-import { getSite } from "@/lib/api/site/queries";
+import { serverClient } from '@/lib/trpc/server'
 
 export const site = mysqlTable('site', {
-  id: serial("id").primaryKey(),
-  sitename: varchar("sitename", { length: 256 }).notNull(),
-  sitedescription: varchar("sitedescription", { length: 256 }).notNull()
-});
- 
-
-// Schema for site - used to validate API requests
-export const insertSitSchema = createInsertSchema(site);
-export const insertSitParams = createSelectSchema(site, {
-  
-}).omit({ 
-  id: true
-});
-export const updateSitSchema = createSelectSchema(site);
-export const updateSitParams = createSelectSchema(site, {
-  
+  id: varchar('id', { length: 255 }).notNull().primaryKey(),
+  sitename: varchar('sitename', { length: 256 }).notNull(),
+  sitedescription: varchar('sitedescription', { length: 256 }).notNull(),
+  sitegoal: varchar('sitegoal', { length: 256 }).notNull(),
 })
-export const sitIdSchema = updateSitSchema.pick({ id: true });
 
-// Types for site - used to type API request params and within Components
-export type Sit = z.infer<typeof updateSitSchema>;
-export type NewSit = z.infer<typeof insertSitSchema>;
-export type NewSitParams = z.infer<typeof insertSitParams>;
-export type UpdateSitParams = z.infer<typeof updateSitParams>;
-export type SitId = z.infer<typeof sitIdSchema>["id"];
-    
 // this type infers the return from getSite() - meaning it will include any joins
-export type CompleteSit = Awaited<ReturnType<typeof getSite>>["site"][number];
+export type Site = Awaited<ReturnType<(typeof serverClient)['site']['getSite']>>
