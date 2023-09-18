@@ -17,7 +17,6 @@ const AdminPage = async () => {
         Signed in as {session.user?.name}
         {user.role === 'admin' ? (
           <div>
-            <br />
             <h1>Admin Page</h1>
             <h1>{user.email}</h1>
           </div>
