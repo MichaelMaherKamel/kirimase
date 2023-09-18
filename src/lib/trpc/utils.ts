@@ -1,4 +1,5 @@
 import { env } from '@/lib/env.mjs'
+import { eventNames } from 'process'
 function getBaseUrl() {
   if (typeof window !== 'undefined') return ''
   if (env.VERCEL_URL) return `https://${env.VERCEL_URL}`
